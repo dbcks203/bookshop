@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+           "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.myspring.bookshop.mybatis.mappers.MemberDAO">
+	<select id="selectView"
+		resultType="com.myspring.bookshop.member.entity.MemberVO">
+		select
+		member_id,
+		member_pw,
+		member_name,
+		member_sex,
+		member_birth,
+		tel,
+		email,
+		zipcode,
+		address,
+		joinDate,
+		use_yn
+		from bs_member
+		where member_id = #{member_id}
+	</select>
+
+	<insert id="insertMember"
+		parameterType="com.myspring.bookshop.member.entity.MemberVO">
+
+		insert bs_member(member_id,
+		member_pw,
+		member_name,
+		member_sex,
+		member_birth,
+		tel,
+		email,
+		zipcode,
+		address)
+		values(#{member_id},
+		#{member_pw},
+		#{member_name},
+		#{member_sex},
+		#{member_birth},
+		#{tel},
+		#{email},
+		#{zipcode},
+		#{address})
+	</insert>
+
+
+	<update id="updateMember"
+		parameterType="com.myspring.bookshop.member.entity.MemberVO">
+		update bs_member set
+		member_name=#{member_name},
+		member_sex=#{member_sex},
+		member_birth=#{member_birth},
+		tel=#{tel},
+		email=#{email},
+		address=#{address}
+
+		where member_id=#{member_id}
+	</update>
+
+
+	<delete id="deleteMember">
+		delete from bs_member
+		where member_id=#{member_id}
+	</delete>
+
+
+
+
+
+	<update id="updateAvailable" parameterType="java.util.Map">
+		update bs_member set
+		use_yn = #{use_yn} where member_id = #{member_id}
+	</update>
+
+
+	<select id="totalCount" parameterType="java.util.Map"
+		resultType="_int">
+		select ceil(COUNT(*) / #{rowSize} ) from bs_member where
+		member_id like concat('%', #{text}, '%')
+		or member_name like
+		concat('%', #{text}, '%')
+	</select>
+
+	<select id="listMembers" parameterType="java.util.Map"
+		resultType="com.myspring.bookshop.member.entity.MemberVO">
+		select * from bs_member where member_id like concat('%',
+		#{text}, '%') or `member_name` like
+		concat('%', #{text}, '%') ORDER BY
+		`joinDate` limit #{startPage}, #{rowSize}
+	</select>
+
+</mapper>
