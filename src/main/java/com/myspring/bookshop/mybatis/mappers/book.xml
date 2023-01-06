@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+           "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.myspring.bookshop.mybatis.mappers.BookDAO">
+
+
+	<delete id="deleteBook">
+		delete from book
+		where book_no=#{book_no}
+	</delete>
+
+	<update id="updateAvailable" parameterType="java.util.Map">
+		update book set
+		use_yn = #{use_yn} where book_no = #{book_no}
+	</update>
+
+
+	<select id="totalCount" parameterType="java.util.Map"
+		resultType="_int">
+		select ceil(COUNT(*) / #{rowSize} )
+		from ${table}
+		where ${key} like concat('%', #{searchText}, '%')
+	</select>
+
+
+	<select id="searchOneKey" parameterType="java.util.Map"
+		resultType="java.util.Map">
+		select *
+		from ${table} where ${searchKey} like concat('%',#{searchText}, '%')
+		ORDER BY ${sortKey} limit #{startPage}, #{rowSize}
+	</select>
+
+	<select id="suggest" parameterType="java.util.Map"
+		resultType="string">
+		select ${suggestValue}
+		from ${table} where ${suggestKey} like concat('%',#{searchText}, '%')
+		ORDER BY ${sortKey} limit #{startPage}, #{rowSize}
+	</select>
+
+
+
+	<select id="listBooks" parameterType="java.util.Map"
+		resultType="com.myspring.bookshop.book.entity.BookVO">
+		select * 
+		from book 
+		where book_no like concat('%',#{text},'%') or `book_title` like concat('%', #{text}, '%') 
+		ORDER BY `book_upload_date` limit #{startPage}, #{rowSize}
+	</select>
+
+
+</mapper>

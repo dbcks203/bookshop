@@ -16,8 +16,7 @@
 <title>Youzan's Project Master Page</title>
 </head>
 <body>
-	<h2>MasterPage</h2>
-	<h3>관 리 자</h3>
+	<h2>BooksList</h2>
 
 	<form name="searchForm">
 		검색어 <input type="text" placeholder="제목,내용,작성자를 입력" id="text"
@@ -33,28 +32,31 @@
 		<option value="25">25개씩보기</option>
 		<option value="30">30개씩보기</option>
 	</select>
-	
-	<select id="searchKey">
-		<option value="member_id">아이디</option>
-		<option value="member_name">이름</option>
-		<option value="member_birth">생년월일</option>
-		<option value="email">이메일</option>
-		<option value="zipcode">우편번호</option>
+
+
+	<select id="kategorie">
+		<option value="">전체</option>
+		<option value="comic">만화</option>
+		<option value="improvement">자기계발</option>
+		<option value="genreFiction">장르소설</option>
+		<option value="reference">참고서</option>
+		<option value="license">자격증</option>
 	</select>
-	
-	
+
+	<select id="searchKey">
+		<option value="book_title">제목</option>
+		<option value="book_writer">저자</option>
+	</select>
+
 	<table>
 		<thead>
 			<tr>
-				<th>아이디</th>
-				<th>이름</th>
-				<th>성별</th>
-				<th>생년월일</th>
 				<th>번호</th>
-				<th>이메일</th>
-				<th>우편번호</th>
-				<th>주소</th>
-				<th>가입일</th>
+				<th>제목</th>
+				<th>카테고리</th>
+				<th>저자</th>
+				<th>가격</th>
+				<th>등록일</th>
 				<th>활성화</th>
 			</tr>
 		</thead>
@@ -67,32 +69,48 @@
 
 
 <script type="text/javascript">
+
 	let currentPageNo = 1;
-	let search = document.querySelector("#text").value;
+	let search = "";
+	let kategorie="";
+	let searchKey="book_title";
 	listSize = $("#dataPerPage").val();
 	loadList();
-	
+	 
 
 	$("#dataPerPage").change(function() {
 		listSize = $("#dataPerPage").val();
 		currentPageNo = 1;
 		loadList();
 	});
+	
+	$("#kategorie").change(function() {
+		kategorie = $("#kategorie").val();
+		currentPageNo = 1;
+		loadList();
+	});
+	
 	$("#searchKey").change(function() {
 		searchKey = $("#searchKey").val();
 		console.log(searchKey);
 	});
+	
 	$("#text").keyup(function() {
         $.ajax({ 
-            url: "${contextPath}/admin/suggestMember.do",
-            data: { "text" : $(this).val() },
+            url: "${contextPath}/admin/suggestBook.do",
+            data: { 
+            	"text" : $(this).val(),
+            	"kategorie" : kategorie,
+				"searchKey" : searchKey,
+				"listSizeStr" : listSize,
+				"pageNoStr" : currentPageNo},
             dataType : "json",
             method: "get",
             success : function(json) {
             	suggestHtml="";
             	if(json.suggestResult!=null){
-            	json.suggestResult.forEach(member=> {
-   				suggestHtml += "<tr><td>" + member.member_id + "</td></tr>";
+            	json.suggestResult.forEach(book=> {
+   				suggestHtml += "<tr><td>" + book + "</td></tr>";
    				});
             	}
             	$("#suggestion_box").html(suggestHtml);
@@ -114,22 +132,19 @@
 	
 	function displayData(list) {	
 		let chartHtml = "";
-		list.forEach(function(member) {
+		list.forEach(function(book) {
 			chartHtml += "<tr>";
-			chartHtml += "<td>" + member.member_id + "</td>";
-			chartHtml += "<td>" + member.member_name + "</td>";
-			chartHtml += "<td>" + member.member_sex + "</td>";
-			chartHtml += "<td>" + member.member_birth + "</td>";
-			chartHtml += "<td>" + member.tel + "</td>";
-			chartHtml += "<td>" + member.email + "</td>";
-			chartHtml += "<td>" + member.zipcode + "</td>";
-			chartHtml += "<td>" + member.address + "</td>";
-			chartHtml += "<td>" + member.joinDate + "</td>";
-			chartHtml += "<td>" + member.use_yn + "</td>";
-			chartHtml += "<td><a href='#' class='deleteUids' data-uid="+member.member_id+">삭제</a></td>";
+			chartHtml += "<td>" + book.book_no + "</td>";
+			chartHtml += "<td>" + book.book_title + "</td>";
+			chartHtml += "<td>" + book.book_kategorie + "</td>";
+			chartHtml += "<td>" + book.book_writer + "</td>";
+			chartHtml += "<td>" + book.book_price + "</td>";
+			chartHtml += "<td>" + book.book_upload_date + "</td>";
+			chartHtml += "<td>" + book.use_yn + "</td>";
+			chartHtml += "<td><a href='#' class='deleteUids' data-id="+book.book_no+">삭제</a></td>";
 			
-			var dump = member.use_yn == 'Y' ? '사용' : '미사용';
-			chartHtml += "<td><a href='#' class='useYns' ><span id="+member.member_id+" data-uid="+member.member_id+" data-useyn="+member.use_yn+">"+dump+"</span></a></td>";
+			var dump = book.use_yn == 'Y' ? '사용' : '미사용';
+			chartHtml += "<td><a href='#' class='useYns' ><span id=book"+book.book_no+" data-id="+book.book_no+" data-useyn="+book.use_yn+">"+dump+"</span></a></td>";
 			chartHtml += "</tr>";
 		});
 		return chartHtml;
@@ -138,15 +153,14 @@
 	function setEvent() {
 		$(".deleteUids").on("click", e => {
 	    	let aLink = e.target;
-	    	let member_id = aLink.getAttribute("data-uid");
+	    	let book_no = aLink.getAttribute("data-id");
 			e.preventDefault();
-			console.log(member_id);
 	    	if (!confirm("삭제 할시겠습니까?")) return;
 	    	
 	    	$.ajax({
 				type:"post"
-				,url : "${contextPath}/admin/memberDelete.do"
-				,data : {"member_id" : member_id}	
+				,url : "${contextPath}/book/bookDelete.do"
+				,data : {"book_no" : book_no}	
 				,dataType : "JSON"
 				,success : function(json) {
 					alert(json.message);
@@ -160,21 +174,21 @@
 		$(".useYns").on("click", e => {
 			let aLink = e.target;
 			e.preventDefault();
-			let member_id = aLink.getAttribute("data-uid");
+			let book_no = aLink.getAttribute("data-id");
 	    	let useYn = aLink.getAttribute("data-useyn");
 			if (!confirm((useYn == 'Y' ? '미사용' : '사용') +  "으로 변경하시겠습니까?")) return;
 			
 	    	$.ajax({
 				type:"post"
-				,url : "${contextPath}/admin/updateAvailable.do"
+				,url : "${contextPath}/book/updateBookAvailable.do"
 				,data : {
-					"member_id" : member_id,
+					"book_no" : book_no,
 					"useYn" : useYn}	
 				,dataType : "JSON"
 				,success : function(json) {
 					alert(json.message);
 		    		if (json.status == true) {
-		    			let useYnSpan = document.querySelector("#"+member_id);
+		    			let useYnSpan = document.querySelector("#book"+book_no);
 		    			if (useYnSpan != null) {
 		    				useYnSpan.innerText = (useYn == 'Y' ? '미사용' : '사용'); 
 		    				aLink.setAttribute("data-useyn", useYn == 'Y' ? 'N' : 'Y');
@@ -187,14 +201,20 @@
 	}
 	
 	function loadList() {
+		var searchKeys = ["kategorie",searchKey];
+		var searchValues = [kategorie, search];
+		console.log(searchKeys);
+		console.log(searchValues);
 		$.ajax({
-			method : "post",
-			url : "${contextPath}/admin/memberList.do",
+			method : "get",
+			url : "${contextPath}/admin/viewList.do",
 			data : {
-				"text" : search,
-				"searchKey" : searchKey,
-				"listSizeStr" : listSize,
-				"pageNoStr" : currentPageNo
+				'listSizeStr' : listSize,
+				'pageNoStr' : currentPageNo,
+				'table' : 'book',
+				'sortKey' : "book_no",
+				'searchKeys' : searchKeys,
+				'searchValues' : searchValues 
 			},
 			dataType : "json",
 			success : function(json) {
@@ -205,8 +225,6 @@
 		});
 	}
 </script>
-
-
 
 </body>
 </html>

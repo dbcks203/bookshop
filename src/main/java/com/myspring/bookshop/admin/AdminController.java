@@ -31,5 +31,8 @@ public class AdminController {
 	public String adminMember(Locale locale, Model model) {
 		return "/admin/adminMember";
 	}
-
+	@RequestMapping(value = "/admin/adminBook.do")
+	public String adminBook(Locale locale, Model model) {
+		return "/admin/adminBook";
+	}
 }

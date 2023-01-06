@@ -1,4 +1,4 @@
-package com.myspring.bookshop.paging;
+package com.myspring.bookshop.util.paging;
 
 public class PagingService {
 	

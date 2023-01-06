@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+           "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.myspring.bookshop.mybatis.mappers.UtilDAO">
+
+
+	<select id="totalCountAnd" parameterType="java.util.Map"
+		resultType="_int">
+		select ceil(COUNT(*) / #{rowSize} )
+		from ${table}
+
+		<foreach collection="searchMap" index="key" item="text" open="where" separator="and">
+			${key} like concat('%', #{text}, '%')
+		</foreach>
+
+	</select>
+
+
+	<select id="searchAnd" parameterType="java.util.Map"
+		resultType="java.util.Map">
+		select *
+		from ${table}
+		<foreach collection="searchMap" index="key" item="text" open="where" separator="and">
+			${key} like concat('%', #{text}, '%')
+		</foreach> 
+		ORDER BY ${sortKey} limit #{startPage},#{rowSize}
+	</select>
+
+
+	<select id="suggestAnd" parameterType="java.util.Map"
+		resultType="string">
+		select ${suggestValue}
+		from ${table} 
+		<foreach collection="searchMap" index="key" item="text" open="where" separator="and">
+			${key} like concat('%', #{text}, '%')
+		</foreach> 
+		ORDER BY ${sortKey} limit
+		#{startPage}, #{rowSize}
+	</select>
+
+
+</mapper>
