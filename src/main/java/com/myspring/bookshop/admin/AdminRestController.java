@@ -31,10 +31,10 @@ public class AdminRestController {
 	UtilService utilService;
 
 	@RequestMapping(value = "/admin/viewList.do")
-	public Map<String, Object> viewList(@RequestBody Map<String, Object> requestMap) {
+	public Map<String, Object> viewList(@ModelAttribute SearchInfoVO searchInfo) {
 
 		Map<String, Object> map = new HashMap<String, Object>();
-		System.out.println(requestMap);
+		System.out.println(searchInfo);
 		/*
 		Map<String, Object> parameters = new HashMap<String, Object>();
 		Map<String, String> searchMap = new HashMap<String, String>();

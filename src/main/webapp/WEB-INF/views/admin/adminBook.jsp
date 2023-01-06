@@ -201,10 +201,10 @@
 	}
 	
 	function loadList() {
-		var searchKeys = ["kategorie",searchKey];
-		var searchValues = [kategorie, search];
+		var searchKeys = [{"kategorie":kategorie},{searchKey: search}];
+
 		console.log(searchKeys);
-		console.log(searchValues);
+
 		$.ajax({
 			method : "get",
 			url : "${contextPath}/admin/viewList.do",
@@ -213,8 +213,8 @@
 				'pageNoStr' : currentPageNo,
 				'table' : 'book',
 				'sortKey' : "book_no",
-				'searchKeys' : searchKeys,
-				'searchValues' : searchValues 
+				'searchKeys' : searchKeys
+
 			},
 			dataType : "json",
 			success : function(json) {
