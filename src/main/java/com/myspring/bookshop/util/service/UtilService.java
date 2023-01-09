@@ -8,12 +8,8 @@ import com.myspring.bookshop.mybatis.mappers.UtilDAO;
 
 @Service
 public class UtilService {
-
-	
 	@Autowired
 	UtilDAO utilDAO;
-	
-	
 	
 	public List<String> suggestAnd(Map<String, Object> parameters) {
 

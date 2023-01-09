@@ -110,7 +110,7 @@ public class MemberController {
 	public String view(@RequestParam(value = "member_id", required = true) String member_id, Model model) {
 
 		logger.debug("view() before ======================== ");
-		model.addAttribute("member", memberService.view(member_id));
+		//model.addAttribute("member", memberService.view(member_id));
 		logger.debug("view() after ======================== ");
 
 		return "/member/view";

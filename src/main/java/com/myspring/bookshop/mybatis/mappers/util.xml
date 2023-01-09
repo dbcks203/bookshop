@@ -11,7 +11,8 @@
 		select ceil(COUNT(*) / #{rowSize} )
 		from ${table}
 
-		<foreach collection="searchMap" index="key" item="text" open="where" separator="and">
+		<foreach collection="searchMap" index="key" item="text"
+			open="where" separator="and">
 			${key} like concat('%', #{text}, '%')
 		</foreach>
 
@@ -22,9 +23,10 @@
 		resultType="java.util.Map">
 		select *
 		from ${table}
-		<foreach collection="searchMap" index="key" item="text" open="where" separator="and">
+		<foreach collection="searchMap" index="key" item="text"
+			open="where" separator="and">
 			${key} like concat('%', #{text}, '%')
-		</foreach> 
+		</foreach>
 		ORDER BY ${sortKey} limit #{startPage},#{rowSize}
 	</select>
 
@@ -32,10 +34,11 @@
 	<select id="suggestAnd" parameterType="java.util.Map"
 		resultType="string">
 		select ${suggestValue}
-		from ${table} 
-		<foreach collection="searchMap" index="key" item="text" open="where" separator="and">
+		from ${table}
+		<foreach collection="searchMap" index="key" item="text"
+			open="where" separator="and">
 			${key} like concat('%', #{text}, '%')
-		</foreach> 
+		</foreach>
 		ORDER BY ${sortKey} limit
 		#{startPage}, #{rowSize}
 	</select>

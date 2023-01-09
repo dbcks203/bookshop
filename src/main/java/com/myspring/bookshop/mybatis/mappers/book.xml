@@ -48,6 +48,20 @@
 		where book_no like concat('%',#{text},'%') or `book_title` like concat('%', #{text}, '%') 
 		ORDER BY `book_upload_date` limit #{startPage}, #{rowSize}
 	</select>
+	
+	
+	<select id="selectView"
+		resultType="com.myspring.bookshop.book.entity.BookVO">
+		select
+		book_no,
+		book_title,
+		book_kategorie,
+		book_writer,
+		book_price,
+		book_upload_date
+		from book
+		where book_no = #{book_no}
+	</select>
 
 
 </mapper>

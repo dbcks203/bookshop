@@ -97,15 +97,16 @@
 	
 	$("#text").keyup(function() {
         $.ajax({ 
-            url: "${contextPath}/admin/suggestBook.do",
-            data: { 
-            	"text" : $(this).val(),
-            	"kategorie" : kategorie,
-				"searchKey" : searchKey,
-				"listSizeStr" : listSize,
-				"pageNoStr" : currentPageNo},
-            dataType : "json",
+            url: "${contextPath}/util/suggest.do",
             method: "get",
+            traditional: true,
+            data: { 
+            	'table' : 'book',
+				'sortKey' : "book_no",
+				'searchKeys' : [searchKey,"book_kategorie"],
+				'searchValues' : [$(this).val(), kategorie]
+				},
+            dataType : "json",
             success : function(json) {
             	suggestHtml="";
             	if(json.suggestResult!=null){
@@ -201,20 +202,17 @@
 	}
 	
 	function loadList() {
-		var searchKeys = [{"kategorie":kategorie},{searchKey: search}];
-
-		console.log(searchKeys);
-
 		$.ajax({
-			method : "get",
-			url : "${contextPath}/admin/viewList.do",
+			method : "post",
+			url : "${contextPath}/util/viewList.do",
+			traditional: true,
 			data : {
 				'listSizeStr' : listSize,
 				'pageNoStr' : currentPageNo,
 				'table' : 'book',
 				'sortKey' : "book_no",
-				'searchKeys' : searchKeys
-
+				'searchKeys' : ["book_kategorie",searchKey],
+				'searchValues' : [kategorie,search]
 			},
 			dataType : "json",
 			success : function(json) {

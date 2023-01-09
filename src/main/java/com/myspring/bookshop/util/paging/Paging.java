@@ -1,5 +1,14 @@
 package com.myspring.bookshop.util.paging;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Paging {
 
 	private int currentPageNo; // 현재 페이지
@@ -22,54 +31,5 @@ public class Paging {
 
 		if (endPageNo > totalPageNo)
 			this.endPageNo = totalPageNo;
-	}
-
-	
-	public int getCurrentPageNo() {
-		return currentPageNo;
-	}
-
-	public void setCurrentPageNo(int currentPageNo) {
-		this.currentPageNo = currentPageNo;
-	}
-
-	public int getPageSize() {
-		return pageSize;
-	}
-
-	public void setPageSize(int pageSize) {
-		this.pageSize = pageSize;
-	}
-
-	public int getListSize() {
-		return listSize;
-	}
-
-	public void setListSize(int listSize) {
-		this.listSize = listSize;
-	}
-
-	public int getTotalPageNo() {
-		return totalPageNo;
-	}
-
-	public void setTotalPageNo(int totalPageNo) {
-		this.totalPageNo = totalPageNo;
-	}
-
-	public int getStartPageNo() {
-		return startPageNo;
-	}
-
-	public void setStartPageNo(int startPageNo) {
-		this.startPageNo = startPageNo;
-	}
-
-	public int getEndPageNo() {
-		return endPageNo;
-	}
-
-	public void setEndPageNo(int endPageNo) {
-		this.endPageNo = endPageNo;
 	}
 }

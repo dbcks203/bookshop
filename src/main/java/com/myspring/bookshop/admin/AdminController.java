@@ -26,7 +26,11 @@ import com.myspring.bookshop.member.service.MemberService;
  */
 @Controller
 public class AdminController {
-
+	
+	@RequestMapping(value = "/admin/adminMain.do")
+	public String adminMain(Locale locale, Model model) {
+		return "/admin/adminMain";
+	}
 	@RequestMapping(value = "/admin/adminMember.do")
 	public String adminMember(Locale locale, Model model) {
 		return "/admin/adminMember";
@@ -35,4 +39,5 @@ public class AdminController {
 	public String adminBook(Locale locale, Model model) {
 		return "/admin/adminBook";
 	}
+	
 }

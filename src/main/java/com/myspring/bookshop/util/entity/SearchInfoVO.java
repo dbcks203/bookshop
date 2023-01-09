@@ -16,12 +16,6 @@ public class SearchInfoVO {
 	String pageNoStr;
 	String table;
 	String sortKey; 
-	
-	
-	
-	String seachValue1;
-	String seachValue2;
-	String seachValue3;
-	
-	String seachValue1;
+	String[] searchValues;
+	String[] searchKeys;
 }

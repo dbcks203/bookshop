@@ -67,32 +67,43 @@
 
 
 <script type="text/javascript">
+
 	let currentPageNo = 1;
-	let search = document.querySelector("#text").value;
+	let search = "";
+	let searchKey= $("#searchKey").val();
 	listSize = $("#dataPerPage").val();
 	loadList();
-	
+	 
 
 	$("#dataPerPage").change(function() {
 		listSize = $("#dataPerPage").val();
 		currentPageNo = 1;
 		loadList();
 	});
+	
+	
 	$("#searchKey").change(function() {
 		searchKey = $("#searchKey").val();
 		console.log(searchKey);
 	});
+	
 	$("#text").keyup(function() {
         $.ajax({ 
-            url: "${contextPath}/admin/suggestMember.do",
-            data: { "text" : $(this).val() },
-            dataType : "json",
+            url: "${contextPath}/util/suggest.do",
             method: "get",
+            traditional: true,
+            data: { 
+            	'table' : 'bs_member',
+				'sortKey' : "joinDate",
+				'searchKeys' : [searchKey],
+				'searchValues' : [$(this).val(),"",""]
+				},
+            dataType : "json",
             success : function(json) {
             	suggestHtml="";
             	if(json.suggestResult!=null){
             	json.suggestResult.forEach(member=> {
-   				suggestHtml += "<tr><td>" + member.member_id + "</td></tr>";
+   				suggestHtml += "<tr><td>" + member + "</td></tr>";
    				});
             	}
             	$("#suggestion_box").html(suggestHtml);
@@ -140,12 +151,11 @@
 	    	let aLink = e.target;
 	    	let member_id = aLink.getAttribute("data-uid");
 			e.preventDefault();
-			console.log(member_id);
 	    	if (!confirm("삭제 할시겠습니까?")) return;
 	    	
 	    	$.ajax({
 				type:"post"
-				,url : "${contextPath}/admin/memberDelete.do"
+				,url : "${contextPath}/member/adminDelete.do"
 				,data : {"member_id" : member_id}	
 				,dataType : "JSON"
 				,success : function(json) {
@@ -166,7 +176,7 @@
 			
 	    	$.ajax({
 				type:"post"
-				,url : "${contextPath}/admin/updateAvailable.do"
+				,url : "${contextPath}/member/updateMemberAvailable.do"
 				,data : {
 					"member_id" : member_id,
 					"useYn" : useYn}	
@@ -187,14 +197,18 @@
 	}
 	
 	function loadList() {
+		console.log(search);
 		$.ajax({
 			method : "post",
-			url : "${contextPath}/admin/memberList.do",
+			url : "${contextPath}/util/viewList.do",
+			traditional: true,
 			data : {
-				"text" : search,
-				"searchKey" : searchKey,
-				"listSizeStr" : listSize,
-				"pageNoStr" : currentPageNo
+				'listSizeStr' : listSize,
+				'pageNoStr' : currentPageNo,
+				'table' : 'bs_member',
+				'sortKey' : "joinDate",
+				'searchValues' : [search,"",""],
+				'searchKeys' : [searchKey]
 			},
 			dataType : "json",
 			success : function(json) {
@@ -205,8 +219,6 @@
 		});
 	}
 </script>
-
-
 
 </body>
 </html>

@@ -15,11 +15,9 @@ import com.myspring.bookshop.member.service.MemberService;
 @RestController
 public class MemberRestController {
 	
-	
 	@Autowired 
 	MemberService memberService;
 
-	
 	@RequestMapping(value = "/member/overlapped.do")
 	public Map<String, String> overlapped(@RequestParam("id") String id, Model model) throws Exception {
 		System.out.println(id);
@@ -36,6 +34,29 @@ public class MemberRestController {
 		}
 		return map;
 	}
-	
-	
+
+	@RequestMapping(value = "/member/adminDelete.do")
+	public Map<String, Object> adminDelete(@RequestParam("member_id") String uid) throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		memberService.deleteMember(uid);
+
+		map.put("status", true);
+		map.put("message", "회원을 삭제했습니다.");
+
+		return map;
+	}
+
+	@RequestMapping(value = "/member/updateMemberAvailable.do")
+	public Map<String, Object> updateUseYn(@RequestParam("member_id") String uid, @RequestParam("useYn") String use_yn)
+			throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+
+		memberService.updateUseYn(uid, "Y".equals(use_yn) ? "N" : "Y");
+
+		map.put("status", true);
+		map.put("message", "회원의 상태를 변경하였습니다.");
+
+		return map;
+	}
+
 }

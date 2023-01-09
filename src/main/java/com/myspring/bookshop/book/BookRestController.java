@@ -42,10 +42,4 @@ public class BookRestController {
 
 		return map;
 	}
-
-
-
-	
-
-
 }
