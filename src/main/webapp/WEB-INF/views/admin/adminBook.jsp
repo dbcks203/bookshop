@@ -19,9 +19,9 @@
 	<h2>BooksList</h2>
 
 	<form name="searchForm">
-		검색어 <input type="text" placeholder="제목,내용,작성자를 입력" id="text"
-			name="text" value="${param.text}" maxlength="130" autocomplete="off">
-		<input type="button" value="검색" onclick="jsSearch()">
+		검색어 <input type="text" id="text" name="text" value="${param.text}"
+			maxlength="130" autocomplete="off"> <input type="button"
+			value="검색" onclick="jsSearch()">
 		<div id="suggestion_box"></div>
 	</form>
 
