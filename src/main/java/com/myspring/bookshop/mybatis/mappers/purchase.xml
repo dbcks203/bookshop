@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+           "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.myspring.bookshop.mybatis.mappers.PurchaseDAO">
+
+
+	<insert id="insertCart"
+		parameterType="com.myspring.bookshop.purchase.entity.book_orderVO">
+		insert book_order(book_no,member_id)
+		values(#{book_no},#{member_id})
+	</insert>
+
+
+	<select id="getCartList" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT ${table1}.order_no, ${table1}.book_no, ${table1}.member_id,
+		${table2}.book_title,${table2}.book_kategorie,${table2}.book_writer,${table2}.book_price
+		FROM ${table1}
+		INNER JOIN ${table2}
+		ON ${table1}.book_no = ${table2}.book_no AND ${table1}.member_id='${member_id}'
+	</select>
+	
+	
+	<delete id="deleteOrder" parameterType="java.util.Map">
+		delete from ${table}
+		where ${deleteKey}=#{deleteValue}
+	</delete>
+</mapper>

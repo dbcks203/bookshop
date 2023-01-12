@@ -20,7 +20,7 @@
 	min-height: 300px;
 }
 </style>
- 
+
 <script
 	src="https://cdn.ckeditor.com/ckeditor5/35.3.2/classic/ckeditor.js"></script>
 <script
@@ -33,41 +33,23 @@
 <body>
 	<h2>답변글</h2>
 
-	<form name="boardForm" id="boardForm" method="post">
+	<form id="replyInfo" method="post" action="<c:url value='/qnaboard/replyInsert.do'/>">
 		<input type="hidden" name="parent_no" value="${article.article_no}">
 		<input type="hidden" name="book_no" value="${article.book_no}">
-		<input type="hidden" name="writeId" value="${sessionScope.member.member_id}">  
-		<label>제목</label> 
-		<input type="text"  name="title" size="50"><br>
-		<label>내용</label>
+		<input type="hidden" name="writeId"
+			value="${sessionScope.member.member_id}"> <label>제목</label> <input
+			type="text" name="title" size="50"><br> <label>내용</label>
 		<textarea name="content" id="editor"></textarea>
-		<input type="submit" value="답글등록">
+		<input type="submit" value="답글등록"> 
 		<input type="button" id="cancle" value="돌아가기">
 	</form>
-	
-
 
 	<script type="text/javascript">
 	
-	 let boardForm = document.querySelector("#boardForm");
-     boardForm.addEventListener("submit", (e) => {
-     	e.preventDefault();
-   
-     	fetch("<c:url value='/qnaboard/replyInsert.do'/>", {		
-     		method : 'POST',
-     	    cache: 'no-cache',
-     		body: new FormData(boardForm)		
-     	})
-     	.then(response => response.json())
-     	.then(jsonResult => {
-     		if (jsonResult.status == true) {
-     			alert("등록에 성공했습니다.");
-     			location.href = jsonResult.url;
-     		}
-     	});
-     });
-     
-     
+	document.querySelector("#cancle").onclick=()=>{
+		location.href= "<c:url value='/book/bookInfo.do?book_no=${book_no}'/>";
+	};
+	
     ClassicEditor
         .create( document.querySelector( '#editor' ), {language : "ko"} )
         .catch( error => {

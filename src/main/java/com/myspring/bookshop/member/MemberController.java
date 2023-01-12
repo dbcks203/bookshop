@@ -53,14 +53,16 @@ public class MemberController {
 	@RequestMapping(value = "/member/login.do")
 	public String login(@RequestParam(value = "member_id", required = true) String member_id,
 			@RequestParam(value = "member_pw", required = true) String member_pw, Model model, HttpSession session) {
-
 		MemberVO memberVO = memberService.login(member_id, member_pw);
 		if (memberVO != null) {
 			session.setAttribute("isLogOn", true);
 			session.setAttribute("member", memberVO);
+			return "home";
 		}
-
-		return "home";
+		else {
+			return "/member/loginForm";
+		}
+		
 	}
 
 	@RequestMapping(value = "/member/addMember.do", method = RequestMethod.POST)
@@ -70,18 +72,20 @@ public class MemberController {
 		String message = null;
 		ResponseEntity resEntity = null;
 		HttpHeaders responseHeaders = new HttpHeaders();
+		
+		System.out.println(_memberVO);
 		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
 		try {
 			memberService.addMember(_memberVO);
 			message = "<script>";
 			message += " alert('회원가입에 성공했습니다');";
-			message += " location.href='/bookshop01/';";
+			message += " location.href='/bookshop/';";
 			message += " </script>";
 
 		} catch (Exception e) {
 			message = "<script>";
 			message += " alert('뭔가 잘못했습니다 다시해요');";
-			message += " location.href='/bookshop01/member/memberForm.do';";
+			message += " location.href='/bookshop/member/memberForm.do';";
 			message += " </script>";
 			e.printStackTrace();
 		}

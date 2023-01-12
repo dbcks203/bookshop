@@ -31,8 +31,6 @@ public class UtilRestController {
 		Map<String, Object> parameters = new HashMap<String, Object>();
 		Map<String, String> searchMap = new HashMap<String, String>();
 		
-
-		
 		for (int i = 0; i < searchInfo.getSearchKeys().length; i++) {
 			searchMap.put(searchInfo.getSearchKeys()[i], searchInfo.getSearchValues()[i]);
 		}

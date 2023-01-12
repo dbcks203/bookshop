@@ -12,6 +12,7 @@
 	crossorigin="anonymous"></script>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <c:set var="book_no" value="${book.book_no}" />
+<c:set var="member_id" value="${sessionScope.member.member_id}"/>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
@@ -29,12 +30,10 @@
 
 		</div>
 	</div>
-
-	<a href='${contextPath}/book/bookListForm.do'>돌아가기</a>
-	<a href="#">장바구니</a>
-	<a href="#">구매하기</a>
-
-
+	<input type="button" id="cancle" value="돌아가기">
+	<input type="button" id="add_cart" value="장바구니">
+	<input type="button" id="purchase" value="구매하기">
+	<input type="button" id="write" value="Q&A 작성">
 
 	<h2>Q&A</h2>
 	<form name="searchForm">
@@ -79,8 +78,7 @@
 
 	<ul id="pagingul">
 	</ul>
-	<button type="button" class="btn btn-primary"
-		onclick="location.href='';">글쓰기</button>
+	
 
 
 </body>
@@ -93,8 +91,22 @@
 	let searchKey="title";
 	listSize = $("#dataPerPage").val();
 	loadList();
-	 
-
+	
+	
+	document.querySelector("#cancle").onclick=()=>{
+		location.href= "<c:url value='/book/bookListForm.do'/>";
+	};
+	document.querySelector("#add_cart").onclick=()=>{
+		location.href= "<c:url value='/purchase/insertCart.do?book_no=${book_no}&&member_id=${member_id}'/>";
+	};
+	document.querySelector("#purchase").onclick=()=>{
+		location.href= "<c:url value='/purchase/bookInfo.do?book_no=${book_no}'/>";
+	};
+	document.querySelector("#write").onclick=()=>{
+		location.href= "<c:url value='/qnaboard/articleWrite.do?book_no=${book_no}'/>";
+	};
+	
+	
 	$("#dataPerPage").change(function() {
 		listSize = $("#dataPerPage").val();
 		currentPageNo = 1;

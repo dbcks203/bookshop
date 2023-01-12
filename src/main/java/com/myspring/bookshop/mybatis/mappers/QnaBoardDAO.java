@@ -9,4 +9,10 @@ public interface QnaBoardDAO {
 	void deleteArticle(String article_no);
 
 	void insertArticle(QnaBoardVO qnaBoardVO);
+
+	void addViewCount(String article_no);
+
+	void insertReply(QnaBoardVO qnaBoardVO);
+
+	void updateArticle(QnaBoardVO qnaBoardVO);
 }

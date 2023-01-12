@@ -112,6 +112,8 @@
 	<a href="${contextPath}/member/loginForm.do">로그인</a>
 	<br>
 	<a href="${contextPath}/member/memberForm.do">회원가입</a>
+	<br>
+	<input type="button" id="booklist" value="상품리스트">
 	<!-- Footer-->
 	<footer class="footer bg-light">
 		<div class="container">
@@ -145,4 +147,12 @@
 	<!-- Bootstrap core JS-->
 
 </body>
+
+<script>
+
+document.querySelector("#booklist").onclick=()=>{
+	location.href= "<c:url value='/book/bookListForm.do'/>";
+};
+
+</script>
 </html>

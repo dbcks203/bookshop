@@ -1,89 +1,61 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@page import="java.io.PrintWriter"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
 <script src="https://code.jquery.com/jquery-2.2.4.min.js"
 	integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
 	crossorigin="anonymous"></script>
+<meta charset="UTF-8">
 
-<title>ÆÄÀÏ</title>
+<style type="text/css">
+.ck.ck-editor {
+	max-width: 1000px;
+}
+
+.ck-editor__editable {
+	min-height: 300px;
+}
+</style>
+
+<script
+	src="https://cdn.ckeditor.com/ckeditor5/35.3.2/classic/ckeditor.js"></script>
+<script
+	src="https://cdn.ckeditor.com/ckeditor5/35.3.2/classic/translations/ko.js"></script>
+
+
+<title>ê¸€ì“°ê¸°</title>
 
 </head>
 <body>
+	<h2>ê¸€ì“°ê¸°</h2>
 
-	<form name="boardForm" id="boardForm" method="post">
-		<label>Á¦¸ñ</label> <input type="text" name="subject" id="subject"><br />
-		<label>³»¿ë</label> <input name="content" id="content" /> <label>ÅÂ±×</label>
-		<select name="tag" id="tag">
-			<option value="N">Àû¿ë¾ÈÇÔ</option>
-			<option value="Y">Àû¿ëÇÔ</option>
-		</select>
-		<table>
-			<tbody>
-				<tr>
-					<th><label>Ã·ºÎÆÄÀÏ</label></th>
-					<td><input type="file" name="filename1" id="filename1" /></td>
-					<td><input type="button" value="Ãß°¡" class="insertFile"></td>
-				</tr>
-			</tbody>
-			<tfoot>
-				<tr style="display: none">
-					<th><label>Ã·ºÎÆÄÀÏ</label></th>
-					<td><input type="file" name="filename1" id="filename1" /></td>
-					<td><input type="button" value="Ãß°¡" class="insertFile"></td>
-					<td><input type="button" value="»èÁ¦" class="deleteFile"></td>
-				</tr>
-			</tfoot>
-		</table>
-
-		<input type="submit" id="write" name="write" value="µî·Ï"> <input
-			type="button" name="cancle" value="Ãë¼Ò" onClick="history.back()">
-
+	<form id="articleInfo" method="post" action="<c:url value='/qnaboard/articleInsert.do'/>">
+		<input type="hidden" name="book_no" value="${book_no}">
+		<input type="hidden" name="writeId" value="${sessionScope.member.member_id}"> 
+		<label>ì œëª©</label> 
+		<input type="text" name="title" size="50"><br> 
+		<label>ë‚´ìš©</label>
+		<textarea name="content" id="editor"></textarea>
+		<input type="submit" value="ë‹µê¸€ë“±ë¡"> 
+		<input type="button" id="cancle" value="ëŒì•„ê°€ê¸°">
 	</form>
 
-
-
-	<script>
-	let tbody = document.querySelector("tbody");
-	let tr = document.querySelector("tfoot tr");
-	let insertFile = document.querySelector(".insertFile");
-
-	function insertFileEventHandler() {
-	   let newTr = tr.cloneNode(true);
-	   tbody.append(newTr);
-	   newTr.style.display = "";
-	   
-	   //newTr.querySelector(".insertFile").addEventListener("click", insertFileEventHandler);
-	   newTr.querySelector(".deleteFile").addEventListener("click", e => {
-	      tbody.removeChild(e.target.parentNode.parentNode)
-	   });
-	}  
-
-	insertFile.addEventListener("click", insertFileEventHandler);
-
-
+	<script type="text/javascript">
 	
-
-        
-        let boardForm = document.querySelector("#boardForm");
-        boardForm.addEventListener("submit", (e) => {
-        	e.preventDefault();
-        	
-        	fetch("articlewrite.zan", {		
-        		method : 'POST',
-        	    cache: 'no-cache',
-        		body: new FormData(boardForm)		
-        	})
-        	.then(response => response.json())
-        	.then(jsonResult => {
-        		alert(jsonResult.message);
-        		if (jsonResult.status == true) {
-        			location.href = jsonResult.url;
-        		}
-        	});
-        });
-</script>
+	
+	document.querySelector("#cancle").onclick=()=>{
+		location.href= "<c:url value='/book/bookInfo.do?book_no=${book_no}'/>";
+	};
+	
+    ClassicEditor
+        .create( document.querySelector( '#editor' ), {language : "ko"} )
+        .catch( error => {
+            console.error( error );
+    });
+	</script>
 </body>
 </html>

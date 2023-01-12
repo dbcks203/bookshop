@@ -8,7 +8,8 @@
 
 
 	<select id="selectView"
-		resultType="com.myspring.bookshop.qnaboard.entity.QnaBoardVO" parameterType="String">
+		resultType="com.myspring.bookshop.qnaboard.entity.QnaBoardVO"
+		parameterType="String">
 		select
 		article_no,
 		parent_no,
@@ -20,10 +21,36 @@
 		writeDate,
 		viewCount
 		from qnaboard
-		where article_no = #{article_no}
+		where article_no =
+		#{article_no}
 	</select>
-	
+
 	<insert id="insertArticle"
+		parameterType="com.myspring.bookshop.qnaboard.entity.QnaBoardVO">
+		
+		<selectKey keyProperty="parent_no" resultType="int" order="BEFORE">
+			SELECT MAX(article_no) + 1 
+			FROM qnaboard
+		</selectKey>
+
+		insert qnaboard(
+		parent_no,
+		book_no,
+		article_type,
+		title,
+		content,
+		writeId)
+		values(
+		
+		#{parent_no},
+		#{book_no},
+		#{article_type},
+		#{title},
+		#{content},
+		#{writeId})
+	</insert>
+	
+	<insert id="insertReply"
 		parameterType="com.myspring.bookshop.qnaboard.entity.QnaBoardVO">
 		insert qnaboard(
 		parent_no,
@@ -40,9 +67,23 @@
 		#{content},
 		#{writeId})
 	</insert>
-	
+
 	<delete id="deleteArticle">
 		delete from qnaboard
 		where article_no=#{article_no}
 	</delete>
+
+	<update id="addViewCount">
+		update qnaboard set viewCount=viewCount+ 1
+		where
+		article_no=#{article_no}
+	</update>
+	
+	
+	<update id="updateArticle" parameterType="com.myspring.bookshop.qnaboard.entity.QnaBoardVO">
+		update qnaboard set
+		title=#{title},
+		content=#{content}
+		where article_no=#{article_no}
+	</update>
 </mapper>
