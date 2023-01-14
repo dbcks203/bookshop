@@ -9,11 +9,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class book_paymentVO {
-	private String payment_no;
-	private String order_no;
-	private String book_no;
-	private String member_id;
-	private String status;
-	private String worked_date;
+public class OrderReceiveVO {
+	private String[] order_array;
 }

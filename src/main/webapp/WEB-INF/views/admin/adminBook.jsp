@@ -184,7 +184,7 @@
 				,url : "${contextPath}/book/updateBookAvailable.do"
 				,data : {
 					"book_no" : book_no,
-					"useYn" : useYn}	
+					"useYn" : useYn}
 				,dataType : "JSON"
 				,success : function(json) {
 					alert(json.message);

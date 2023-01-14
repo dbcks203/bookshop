@@ -15,6 +15,8 @@
 	<a href="${contextPath}/member/infoMember.do">상세정보</a>
 	<br> <a href="${contextPath}/">돌아가기</a>
 	<br> <a href="<c:url value='/purchase/viewMemberCart.do'/>">장바구니보기</a>
+	<br> <a href="<c:url value='/purchase/viewMemberPayment.do'/>">결제내역보기</a>
+	<br> <a href="<c:url value='/purchase/viewMemberDelivery.do'/>">배송상태조회</a>
 	
 </body>
 </html>

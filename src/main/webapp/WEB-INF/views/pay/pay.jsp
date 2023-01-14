@@ -1,27 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 
 
 <head>
-  <title>결제하기</title>
-  <script src="https://js.tosspayments.com/v1/payment"></script>
+<title>결제하기</title>
+<script src="https://js.tosspayments.com/v1/payment"></script>
 </head>
 <body>
-
-<input type="button" id="TOSSPAY" value ="토스페이" onclick = "onLoadPayment('토스페이')">
-
-네이버페이 / NAVERPAY
-삼성페이 / SAMSUNGPAY
-엘페이 / LPAY
-카카오페이 / KAKAOPAY
-페이코 / PAYCO
-LG페이 / LGPAY
-SSG페이 / SSG
+	<h2>${quantity}건 결제 총 {totalPrice}</h2>
+	<input type="button" id="TOSSPAY" value="토스페이"
+		onclick="onLoadPayment('토스페이')"> 네이버페이 / NAVERPAY 삼성페이 /
+	SAMSUNGPAY 엘페이 / LPAY 카카오페이 / KAKAOPAY 페이코 / PAYCO LG페이 / LGPAY SSG페이 /
+	SSG
 
 
-  <script>
+	<script>
     var clientKey = 'test_ck_JQbgMGZzorzBWmyNgP2rl5E1em4d'
     var tossPayments = TossPayments(clientKey) // 클라이언트 키로 초기화하기
     
@@ -45,7 +41,7 @@ SSG페이 / SSG
     }
     
   </script>
-  
+
 </body>
 
 

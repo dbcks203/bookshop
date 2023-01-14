@@ -1,5 +1,8 @@
 package com.myspring.bookshop.qnaboard.service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,9 +21,17 @@ public class QnaBoardService {
 	
 	
 	
-	public boolean deleteArticle(String article_no) {
+	public boolean deleteArticle(String article_no, String parent_no) {
 		try {
-			qnaBoardDAO.deleteArticle(article_no);
+			Map<String,String>parameterMap = new HashMap<String, String>();
+			if(article_no.equals(parent_no)) 
+				parameterMap.put("key", "parent_no");
+			
+			else 
+				parameterMap.put("key", "article_no");
+			
+			parameterMap.put("article_no",article_no);
+			qnaBoardDAO.deleteArticle(parameterMap);
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();

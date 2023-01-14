@@ -7,9 +7,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Youzan's Project</title>
-<c:set var="member_id" value="${sessionScope.member.member_id}"/>
-<c:set var="article_no" value="${article.article_no}"/>
-<c:set var="book_no" value="${article.book_no}"/>
+<c:set var="member_id" value="${sessionScope.member.member_id}" />
+<c:set var="article_no" value="${article.article_no}" />
+<c:set var="parent_no" value="${article.parent_no}" />
+<c:set var="book_no" value="${article.book_no}" />
 
 <script src="https://code.jquery.com/jquery-2.2.4.js"
 	integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
@@ -68,7 +69,9 @@ ycAddEventHandler("#delete", e => {
 	$.ajax({ 
         url: "<c:url value='/qnaboard/articleDelete.do'/>",
         method: "get",
-        data: {"article_no" : "${article_no}"},
+        data: {
+        	"article_no" : "${article_no}",
+        	"parent_no" : "${parent_no}"},
         dataType : "json",
         success : function(json) {
         	if (json.status==true) {

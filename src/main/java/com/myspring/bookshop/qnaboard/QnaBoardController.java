@@ -38,8 +38,7 @@ public class QnaBoardController {
 		model.addAttribute("article", qnaBoardService.getArticle(article_no));
 		return "/qnaboard/replyForm";
 	}
-	
-	
+
 	@RequestMapping(value = "/qnaboard/articleWrite.do")
 	public String articleWrite(@RequestParam(value = "book_no", required = true) String book_no, Locale locale,
 			Model model) throws Exception {
@@ -47,54 +46,52 @@ public class QnaBoardController {
 		return "/qnaboard/articleWrite";
 	}
 
-	
 	@RequestMapping(value = "/qnaboard/articleSetEdit.do")
 	public String articleSetEdit(@RequestParam(value = "article_no", required = true) String article_no, Locale locale,
 			Model model) throws Exception {
 		model.addAttribute("article", qnaBoardService.getArticle(article_no));
 		return "/qnaboard/articleSetEdit";
 	}
-	
+
 	@RequestMapping(value = "/qnaboard/articleUpdate.do")
-	public ResponseEntity articleUpdate(@ModelAttribute("QnaBoardVO")QnaBoardVO qnaBoardVO, Locale locale,
-			Model model) throws Exception {
+	public ResponseEntity articleUpdate(@ModelAttribute("QnaBoardVO") QnaBoardVO qnaBoardVO, Locale locale, Model model)
+			throws Exception {
 		HttpHeaders responseHeaders = new HttpHeaders();
 		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
 		String message = qnaBoardService.articleUpdate(qnaBoardVO);
 		ResponseEntity resEntity = new ResponseEntity(message, responseHeaders, HttpStatus.OK);
 		return resEntity;
 	}
-	
+
 	@ResponseBody
 	@RequestMapping(value = "/qnaboard/articleDelete.do")
-	public Map<String,Object> articleDelete(@RequestParam(value = "article_no", required = true) String article_no, Model model) throws Exception {
-		Map<String,Object> returnMap = new HashMap<String, Object>();
-		returnMap.put("status",qnaBoardService.deleteArticle(article_no));
+	public Map<String, Object> articleDelete(@RequestParam(value = "article_no", required = true) String article_no,
+			@RequestParam("parent_no") String parent_no, Model model) throws Exception {
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		returnMap.put("status", qnaBoardService.deleteArticle(article_no,parent_no));
 		return returnMap;
 	}
 
-
 	@RequestMapping(value = "/qnaboard/articleInsert.do")
-	public ResponseEntity articleInsert(@ModelAttribute("QnaBoardVO")QnaBoardVO qnaBoardVO,Locale locale, Model model)
+	public ResponseEntity articleInsert(@ModelAttribute("QnaBoardVO") QnaBoardVO qnaBoardVO, Locale locale, Model model)
 			throws Exception {
 		HttpHeaders responseHeaders = new HttpHeaders();
 		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
 		String message = qnaBoardService.insertArticle(qnaBoardVO);
 		ResponseEntity resEntity = new ResponseEntity(message, responseHeaders, HttpStatus.OK);
 		return resEntity;
-	
+
 	}
-	
+
 	@RequestMapping(value = "/qnaboard/replyInsert.do")
-	public ResponseEntity replyInsert(@ModelAttribute("QnaBoardVO")QnaBoardVO qnaBoardVO,Locale locale, Model model)
+	public ResponseEntity replyInsert(@ModelAttribute("QnaBoardVO") QnaBoardVO qnaBoardVO, Locale locale, Model model)
 			throws Exception {
 		HttpHeaders responseHeaders = new HttpHeaders();
 		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
 		String message = qnaBoardService.insertReply(qnaBoardVO);
 		ResponseEntity resEntity = new ResponseEntity(message, responseHeaders, HttpStatus.OK);
 		return resEntity;
-	
+
 	}
-	
-	
+
 }

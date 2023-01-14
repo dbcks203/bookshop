@@ -191,6 +191,18 @@
 			<artifactId>tiles-servlet</artifactId>
 			<version>2.2.2</version>
 		</dependency>
+		<!-- websocket -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-websocket</artifactId>
+			<version>5.2.2.RELEASE</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-messaging</artifactId>
+			<version>5.2.2.RELEASE</version>
+		</dependency>
 
 		<!-- 다중 파일 업로드 -->
 		<dependency>

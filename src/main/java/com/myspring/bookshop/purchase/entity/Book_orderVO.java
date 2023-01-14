@@ -9,9 +9,11 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class book_orderVO {
+public class Book_orderVO {
 	private String order_no;
 	private String book_no;
 	private String member_id;
+	private String quantity;
+	private String payment_key;
 	private String worked_date;
 }
