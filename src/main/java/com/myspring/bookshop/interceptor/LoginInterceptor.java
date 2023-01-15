@@ -21,10 +21,11 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 				"/bookshop/member/loginForm.do",
 				"/bookshop/member/login.do",
 				"/bookshop/member/memberForm.do",
-				"/member/addMember.do",
+				"/bookshop/member/addMember.do",
 				"/bookshop/member/plzLogin.do",
 				"/bookshop/book/bookListForm.do",
 				"/bookshop/util/viewList.do",
+				"/bookshop/member/overlapped.do",
 				"/"
 				};
 		logger.info("uri:{}", requestURI);

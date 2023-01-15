@@ -48,7 +48,7 @@
 				<a class="btn btn-primary"
 						href="<c:url value='/member/myPageMain.do'/>">My Page</a>
 					<a class="btn btn-primary"
-						href="<c:url value='/member/logOut.do'/>">LogOut</a>
+						href="<c:url value='/member/logOut.do?member_id=${member.member_name}'/>">LogOut</a>
 					<a class="btn btn-primary"
 						href="<c:url value='/book/bookListForm.do'/>">Book List</a>
 				</c:when>

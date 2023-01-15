@@ -1,14 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:set var="contextPath" value="${pageContext.request.contextPath}" />
-<!DOCTYPE html >
+
+<!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
 
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <script>
 	function execDaumPostcode() {
 		new daum.Postcode({

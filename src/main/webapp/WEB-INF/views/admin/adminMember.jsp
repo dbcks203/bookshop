@@ -15,6 +15,32 @@
 	crossorigin="anonymous"></script>
 <title>Youzan's Project Master Page</title>
 </head>
+<style type="text/css">
+#dataBody {
+	display: flex;
+	flex-flow: row wrap;
+}
+
+#dataBody ul {
+	padding: 0px !IMPORTANT;
+	margin: 1rem;
+}
+
+#pagingul {
+	display: flex;
+	justify-content: center;
+	padding: 1rem;
+}
+
+#pagingul li {
+	font-size: 1rem;
+	margin: 0.5rem;
+}
+
+#pagingul li a {
+	font-size: 1rem;
+}
+</style>
 <body>
 	<h2>MasterPage</h2>
 	<h3>관 리 자</h3>
@@ -63,6 +89,7 @@
 	</table>
 
 	<ul id="pagingul"></ul>
+	<input type="button" id="cancel" value="메인으로">
 </body>
 
 
@@ -73,7 +100,10 @@
 	let searchKey= $("#searchKey").val();
 	listSize = $("#dataPerPage").val();
 	loadList();
-	 
+	
+	document.querySelector("#cancel").onclick=()=>{
+		location.href= "<c:url value='/admin/adminMain.do'/>";
+	};
 
 	$("#dataPerPage").change(function() {
 		listSize = $("#dataPerPage").val();
@@ -135,7 +165,7 @@
 			chartHtml += "<td>" + member.email + "</td>";
 			chartHtml += "<td>" + member.zipcode + "</td>";
 			chartHtml += "<td>" + member.address + "</td>";
-			chartHtml += "<td>" + member.joinDate + "</td>";
+			chartHtml += "<td>" + new Date(member.joinDate) + "</td>";
 			chartHtml += "<td>" + member.use_yn + "</td>";
 			chartHtml += "<td><a href='#' class='deleteUids' data-uid="+member.member_id+">삭제</a></td>";
 			

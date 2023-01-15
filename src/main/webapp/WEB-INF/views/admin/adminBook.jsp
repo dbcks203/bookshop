@@ -15,6 +15,32 @@
 	crossorigin="anonymous"></script>
 <title>Youzan's Project Master Page</title>
 </head>
+<style type="text/css">
+#dataBody {
+	display: flex;
+	flex-flow: row wrap;
+}
+
+#dataBody ul {
+	padding: 0px !IMPORTANT;
+	margin: 1rem;
+}
+
+#pagingul {
+	display: flex;
+	justify-content: center;
+	padding: 1rem;
+}
+
+#pagingul li {
+	font-size: 1rem;
+	margin: 0.5rem;
+}
+
+#pagingul li a {
+	font-size: 1rem;
+}
+</style>
 <body>
 	<h2>BooksList</h2>
 
@@ -65,7 +91,7 @@
 	</table>
 
 	<ul id="pagingul"></ul>
-	
+	<input type="button" id="cancel" value="메인으로">
 	<input type="button" id="insert_book" value="책 추가하기">
 </body>
 
@@ -81,7 +107,10 @@
 	
 	document.querySelector("#insert_book").onclick=()=>{
 		location.href= "<c:url value='/admin/insertBook.do'/>";
-	}; 
+	};
+	document.querySelector("#cancel").onclick=()=>{
+		location.href= "<c:url value='/admin/adminMain.do'/>";
+	};
 
 	$("#dataPerPage").change(function() {
 		listSize = $("#dataPerPage").val();
@@ -145,7 +174,7 @@
 			chartHtml += "<td>" + book.book_kategorie + "</td>";
 			chartHtml += "<td>" + book.book_writer + "</td>";
 			chartHtml += "<td>" + book.book_price + "</td>";
-			chartHtml += "<td>" + book.book_upload_date + "</td>";
+			chartHtml += "<td>" + new Date(book.book_upload_date) + "</td>";
 			chartHtml += "<td>" + book.use_yn + "</td>";
 			chartHtml += "<td><a href='#' class='deleteUids' data-id="+book.book_no+">삭제</a></td>";
 			
@@ -183,7 +212,6 @@
 			let book_no = aLink.getAttribute("data-id");
 	    	let useYn = aLink.getAttribute("data-useyn");
 			if (!confirm((useYn == 'Y' ? '미사용' : '사용') +  "으로 변경하시겠습니까?")) return;
-			
 	    	$.ajax({
 				type:"post"
 				,url : "${contextPath}/book/updateBookAvailable.do"

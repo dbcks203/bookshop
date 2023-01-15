@@ -17,7 +17,7 @@ public class MemberService {
 	
 	public MemberVO login(String member_id, String member_pw) {
 		MemberVO memberVO = memberDAO.selectView(member_id);
-		if (memberVO != null && memberVO.getMember_pw().equals(member_pw)) {
+		if (memberVO != null && memberVO.getMember_pw().equals(member_pw)&&memberVO.getUse_yn().equals("Y")) {
 			return memberVO;
 		}
 

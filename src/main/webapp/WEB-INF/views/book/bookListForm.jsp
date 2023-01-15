@@ -146,8 +146,8 @@
 				'pageNoStr' : currentPageNo,
 				'table' : 'book',
 				'sortKey' : "book_no",
-				'searchKeys' : ["book_kategorie",searchKey],
-				'searchValues' : [kategorie,search]
+				'searchKeys' : ["book_kategorie",searchKey,"use_yn"],
+				'searchValues' : [kategorie,search,"Y"]
 			},
 			dataType : "json",
 			success : function(json) {

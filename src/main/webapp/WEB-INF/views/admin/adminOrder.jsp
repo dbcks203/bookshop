@@ -15,6 +15,32 @@
 	crossorigin="anonymous"></script>
 <title>Youzan's Project Master Page</title>
 </head>
+<style type="text/css">
+#dataBody {
+	display: flex;
+	flex-flow: row wrap;
+}
+
+#dataBody ul {
+	padding: 0px !IMPORTANT;
+	margin: 1rem;
+}
+
+#pagingul {
+	display: flex;
+	justify-content: center;
+	padding: 1rem;
+}
+
+#pagingul li {
+	font-size: 1rem;
+	margin: 0.5rem;
+}
+
+#pagingul li a {
+	font-size: 1rem;
+}
+</style>
 <body>
 	<h2>BooksList</h2>
 
@@ -64,6 +90,7 @@
 	</table>
 
 	<ul id="pagingul"></ul>
+	<input type="button" id="cancel" value="메인으로">
 </body>
 
 
@@ -76,7 +103,10 @@
 	
 	listSize = $("#dataPerPage").val();
 	loadList();
-	 
+	
+	document.querySelector("#cancel").onclick=()=>{
+		location.href= "<c:url value='/admin/adminMain.do'/>";
+	};
 
 	$("#dataPerPage").change(function() {
 		listSize = $("#dataPerPage").val();
@@ -136,7 +166,7 @@
 			chartHtml += "<tr>";
 			chartHtml += "<td>" + ele.delivery_no + "</td>";
 			chartHtml += "<td>" + ele.member_id + "</td>";
-			chartHtml += "<td>" + ele.worked_date + "</td>";
+			chartHtml += "<td>" + new Date(ele.worked_date) + "</td>";
 			chartHtml += "<td><a href='#' class='delivery_status' data-id="+ ele.delivery_no+" data-status="+ ele.status+">"+ ele.status + "</a></td>";
 			chartHtml += "</tr>";
 		});

@@ -40,7 +40,7 @@
 		<input type="text" name="title" size="50"><br> 
 		<label>내용</label>
 		<textarea name="content" id="editor"></textarea>
-		<input type="submit" value="답글등록"> 
+		<input type="submit" value="등록하기"> 
 		<input type="button" id="cancle" value="돌아가기">
 	</form>
 
