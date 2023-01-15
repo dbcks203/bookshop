@@ -25,23 +25,14 @@
 	</select>
 
 	<insert id="insertArticle"
-		parameterType="com.myspring.bookshop.qnaboard.entity.QnaBoardVO">
-		
-		<selectKey keyProperty="parent_no" resultType="int" order="BEFORE">
-			SELECT MAX(article_no) + 1 
-			FROM qnaboard
-		</selectKey>
-
+		parameterType="com.myspring.bookshop.qnaboard.entity.QnaBoardVO" useGeneratedKeys="true" keyProperty="article_no">
 		insert qnaboard(
-		parent_no,
 		book_no,
 		article_type,
 		title,
 		content,
 		writeId)
 		values(
-		
-		#{parent_no},
 		#{book_no},
 		#{article_type},
 		#{title},
@@ -49,6 +40,11 @@
 		#{writeId})
 	</insert>
 	
+	<update id="updatePno" parameterType="_int">
+		update qnaboard 
+		set parent_no=#{artice_no}
+		where article_no=#{article_no}
+	</update>
 	<insert id="insertReply"
 		parameterType="com.myspring.bookshop.qnaboard.entity.QnaBoardVO">
 		insert qnaboard(

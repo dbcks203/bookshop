@@ -11,7 +11,8 @@
 	integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
 	crossorigin="anonymous"></script>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
-<c:set var="book_no" value="${book.book_no}" />
+<c:set var="book_no" value="${book.book_no}"/>
+<c:set var="book_title" value="${book.book_title}" />
 <c:set var="member_id" value="${sessionScope.member.member_id}"/>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -34,7 +35,7 @@
 	<input type="button" id="add_cart" value="장바구니">
 	<input type="button" id="purchase" value="구매하기">
 	<input type="button" id="write" value="Q&A 작성">
-
+	<input type="button" id="chat_enter" value="채팅하기">
 	<h2>Q&A</h2>
 	<form name="searchForm">
 		검색어 <input type="text" placeholder="제목,내용,작성자를 입력" id="text"
@@ -105,7 +106,9 @@
 	document.querySelector("#write").onclick=()=>{
 		location.href= "<c:url value='/qnaboard/articleWrite.do?book_no=${book_no}'/>";
 	};
-	
+	document.querySelector("#chat_enter").onclick=()=>{
+		location.href= "http://localhost:8089/WebSocketChatting/chatenter.zan?seq=${book_no}&&title=${book_title}&&member_id=${member_id}";
+	};
 	
 	$("#dataPerPage").change(function() {
 		listSize = $("#dataPerPage").val();

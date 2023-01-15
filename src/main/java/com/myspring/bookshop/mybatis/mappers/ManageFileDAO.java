@@ -3,5 +3,5 @@ import com.myspring.bookshop.file.entity.ManageFile;
 
 public interface ManageFileDAO {
 	int insert(ManageFile boardFile);
-	ManageFile getManageFile(String f_id);
+	ManageFile getManageFile(String book_no);
 }

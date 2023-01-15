@@ -17,4 +17,6 @@ public interface QnaBoardDAO {
 	void insertReply(QnaBoardVO qnaBoardVO);
 
 	void updateArticle(QnaBoardVO qnaBoardVO);
+
+	void updatePno(int article_no);
 }

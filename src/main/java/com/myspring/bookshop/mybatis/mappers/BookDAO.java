@@ -8,4 +8,5 @@ public interface BookDAO {
 	void deleteBook(String bookNo);
 	void updateAvailable(Map<String, Object> parameters);
 	BookVO selectView(String book_no);
+	void insertBook(Map<String, String> map);
 }

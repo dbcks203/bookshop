@@ -20,17 +20,7 @@
 	
 </script>
 <link rel="stylesheet" href="/bookshop/resources/static/css/style_boardList.css">
-<style type="text/css">
-#dataBody {
-	display: flex;
-	flex-flow: row wrap;
-}
 
-#dataBody ul {
-    padding: 0px !IMPORTANT;
-	margin: 1rem;
-}
-</style>
 </head>
 <body>
 	<h2>BooksList</h2>
@@ -43,7 +33,6 @@
 	</form>
 
 	<select id="dataPerPage">
-		<option value="6">6개씩보기</option>
 		<option value="12">12개씩보기</option>
 		<option value="18">18개씩보기</option>
 		<option value="24">24개씩보기</option>
@@ -135,7 +124,7 @@
 		let chartHtml = "";
 		list.forEach(function(book) {
 			chartHtml += "<ul class='card'>";
-			chartHtml += "<img src=${contextPath}/fileDownload.do?book_no="+book.book_no+" class='card-img-top' style ='width: 240'>";
+			chartHtml += "<img src=${contextPath}/thumbnail.do?book_no="+book.book_no+" class='card-img-top' style ='width: 240'>";
 			chartHtml += "<li class='card-body'>";
 			chartHtml += "<h5>Title: "+ book.book_title +"</h5>";
 			chartHtml += "<p class='card-text'>Writer: " + book.book_writer+"<br>price: "+book.book_price + "$</p>";

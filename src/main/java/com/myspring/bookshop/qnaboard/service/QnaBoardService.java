@@ -45,6 +45,8 @@ public class QnaBoardService {
 		String url = "\"/bookshop/book/bookInfo.do?book_no=" + qnaBoardVO.getBook_no() + "\";";
 		try {
 			qnaBoardDAO.insertArticle(qnaBoardVO);
+			System.out.println(qnaBoardVO.getArticle_no());
+			qnaBoardDAO.updatePno(qnaBoardVO.getArticle_no());
 			message += " alert('성공했습니다');";
 		} catch (Exception e) {
 			message += " alert('뭔가 잘못했습니다 다시해요');";

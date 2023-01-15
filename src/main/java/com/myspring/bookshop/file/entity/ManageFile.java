@@ -15,6 +15,7 @@ public class ManageFile implements Serializable {
 	private static final long serialVersionUID = -6675626554487766989L;
 
 	private int f_id;
+	private int book_no;
 	private long number;
 	private String org_name;
 	private String real_name ; ;

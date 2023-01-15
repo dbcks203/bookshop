@@ -4,9 +4,9 @@
            "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.myspring.bookshop.mybatis.mappers.ManageFileDAO">
+
 	<insert id="insert" parameterType="com.myspring.bookshop.file.entity.ManageFile"
-		useGeneratedKeys="true" keyProperty="f_id"
-	>
+		useGeneratedKeys="true" keyProperty="f_id">
 		insert into manage_file (
 			 book_no
 			,org_name
@@ -44,6 +44,6 @@
 			,length
 			,thumbnail
 		from manage_file
-		where f_id = #{f_id}
+		where book_no = #{book_no}
 	</select>
 </mapper>

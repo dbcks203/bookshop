@@ -21,35 +21,43 @@
 		resultType="_int">
 		select ceil(COUNT(*) / #{rowSize} )
 		from ${table}
-		where ${key} like concat('%', #{searchText}, '%')
+		where
+		${key} like concat('%', #{searchText}, '%')
 	</select>
 
 
 	<select id="searchOneKey" parameterType="java.util.Map"
 		resultType="java.util.Map">
 		select *
-		from ${table} where ${searchKey} like concat('%',#{searchText}, '%')
-		ORDER BY ${sortKey} limit #{startPage}, #{rowSize}
+		from ${table} where ${searchKey} like
+		concat('%',#{searchText}, '%')
+		ORDER BY ${sortKey} limit #{startPage},
+		#{rowSize}
 	</select>
 
 	<select id="suggest" parameterType="java.util.Map"
 		resultType="string">
 		select ${suggestValue}
-		from ${table} where ${suggestKey} like concat('%',#{searchText}, '%')
-		ORDER BY ${sortKey} limit #{startPage}, #{rowSize}
+		from ${table} where ${suggestKey}
+		like concat('%',#{searchText}, '%')
+		ORDER BY ${sortKey} limit
+		#{startPage}, #{rowSize}
 	</select>
 
 
 
 	<select id="listBooks" parameterType="java.util.Map"
 		resultType="com.myspring.bookshop.book.entity.BookVO">
-		select * 
-		from book 
-		where book_no like concat('%',#{text},'%') or `book_title` like concat('%', #{text}, '%') 
-		ORDER BY `book_upload_date` limit #{startPage}, #{rowSize}
+		select *
+		from book
+		where book_no like concat('%',#{text},'%')
+		or `book_title` like concat('%',
+		#{text}, '%')
+		ORDER BY
+		`book_upload_date` limit #{startPage}, #{rowSize}
 	</select>
-	
-	
+
+
 	<select id="selectView"
 		resultType="com.myspring.bookshop.book.entity.BookVO">
 		select
@@ -62,6 +70,19 @@
 		from book
 		where book_no = #{book_no}
 	</select>
+
+
+
+	<insert id="insertBook" parameterType="java.util.Map"
+		useGeneratedKeys="true" keyProperty="book_no" keyColumn="book">
+		insert book(book_title,book_kategorie,book_writer,book_price)
+		values(
+		#{book_title},
+		#{book_kategorie},
+		#{book_writer},
+		#{book_price})
+
+	</insert>
 
 
 </mapper>

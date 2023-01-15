@@ -29,28 +29,28 @@ public class QnaBoardController {
 			Model model) throws Exception {
 		qnaBoardService.addViewCount(article_no);
 		model.addAttribute("article", qnaBoardService.getArticle(article_no));
-		return "/qnaboard/articleInfo";
+		return "qnaboard/articleInfo";
 	}
 
 	@RequestMapping(value = "/qnaboard/replyForm.do")
 	public String replyForm(@RequestParam(value = "article_no", required = true) String article_no, Locale locale,
 			Model model) throws Exception {
 		model.addAttribute("article", qnaBoardService.getArticle(article_no));
-		return "/qnaboard/replyForm";
+		return "qnaboard/replyForm";
 	}
 
 	@RequestMapping(value = "/qnaboard/articleWrite.do")
 	public String articleWrite(@RequestParam(value = "book_no", required = true) String book_no, Locale locale,
 			Model model) throws Exception {
 		model.addAttribute("book_no", book_no);
-		return "/qnaboard/articleWrite";
+		return "qnaboard/articleWrite";
 	}
 
 	@RequestMapping(value = "/qnaboard/articleSetEdit.do")
 	public String articleSetEdit(@RequestParam(value = "article_no", required = true) String article_no, Locale locale,
 			Model model) throws Exception {
 		model.addAttribute("article", qnaBoardService.getArticle(article_no));
-		return "/qnaboard/articleSetEdit";
+		return "qnaboard/articleSetEdit";
 	}
 
 	@RequestMapping(value = "/qnaboard/articleUpdate.do")

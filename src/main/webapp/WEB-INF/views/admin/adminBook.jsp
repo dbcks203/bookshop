@@ -65,6 +65,8 @@
 	</table>
 
 	<ul id="pagingul"></ul>
+	
+	<input type="button" id="insert_book" value="책 추가하기">
 </body>
 
 
@@ -76,7 +78,10 @@
 	let searchKey="book_title";
 	listSize = $("#dataPerPage").val();
 	loadList();
-	 
+	
+	document.querySelector("#insert_book").onclick=()=>{
+		location.href= "<c:url value='/admin/insertBook.do'/>";
+	}; 
 
 	$("#dataPerPage").change(function() {
 		listSize = $("#dataPerPage").val();

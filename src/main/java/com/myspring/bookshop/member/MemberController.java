@@ -29,26 +29,37 @@ public class MemberController {
 
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 
+	@Autowired
+	MemberService memberService;
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
 	@RequestMapping(value = "/member/loginForm.do")
 	public String loginForm(Locale locale, Model model) {
-		return "/member/loginForm";
+		return "member/loginForm";
+	}
+	
+	@RequestMapping("/member/findPwd.do")
+	public String findPwd(Locale locale, Model model) {
+		return "member/findPwd";
 	}
 
 	@RequestMapping(value = "/member/memberForm.do")
 	public String memberForm(Locale locale, Model model) {
-		return "/member/memberForm";
+		return "member/memberForm";
 	}
 
 	@RequestMapping(value = "/member/myPageMain.do")
 	public String myPageMain(Locale locale, Model model) {
-		return "/member/myPageMain";
+		return "member/myPageMain";
 	}
-
-	@Autowired
-	MemberService memberService;
+	
+	@RequestMapping(value = "/member/plzLogin", method = RequestMethod.GET)
+	public String plzLogin(Locale locale, Model model) {
+		return "member/plzLogin";
+	}
+	
+	
 
 	@RequestMapping(value = "/member/login.do")
 	public String login(@RequestParam(value = "member_id", required = true) String member_id,
@@ -60,7 +71,7 @@ public class MemberController {
 			return "home";
 		}
 		else {
-			return "/member/loginForm";
+			return "member/loginForm";
 		}
 		
 	}
@@ -117,14 +128,14 @@ public class MemberController {
 		//model.addAttribute("member", memberService.view(member_id));
 		logger.debug("view() after ======================== ");
 
-		return "/member/view";
+		return "member/view";
 	}
 
 	@RequestMapping(value = "/member/infoMember.do")
 	public ModelAndView infoMember(Model model, HttpSession session) throws Exception {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("memberBean", session.getAttribute("member"));
-		mav.setViewName("/member/memberInfo");
+		mav.setViewName("member/memberInfo");
 		return mav;
 	}
 	
@@ -138,12 +149,19 @@ public class MemberController {
 	
 	}
 	
+	@RequestMapping(value = "/member/logOut.do")
+	public String logOut(@RequestParam(value = "member_id", required = true)String uid, HttpSession session) throws Exception {
+		session.setAttribute("member", null);
+		session.setAttribute("isLogOn", false);
+		
+		return "home";
+	}
 	
 	@RequestMapping(value = "/member/memberUpdateForm.do")
 	public ModelAndView memberUpdateForm(Model model, HttpSession session) throws Exception {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("memberBean", session.getAttribute("member"));
-		mav.setViewName("/member/memberUpdateForm");
+		mav.setViewName("member/memberUpdateForm");
 		return mav;
 	}
 	
@@ -152,7 +170,7 @@ public class MemberController {
 	public String memberUpdate(@ModelAttribute("memberVO") MemberVO _memberVO, HttpSession session, Model model) throws Exception {
 	
 		model.addAttribute("memberBean", memberService.updateMember(_memberVO));
-		return "/member/memberInfo";
+		return "member/memberInfo";
 	}
 
 }
